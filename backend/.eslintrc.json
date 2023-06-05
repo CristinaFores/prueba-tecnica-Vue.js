@@ -40,6 +40,7 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "off",
-    "no-implicit-coercion": "off"
+    "no-implicit-coercion": "off",
+    "no-unused-vars": "off"
   }
 }
