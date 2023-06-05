@@ -15,12 +15,18 @@ export const loginUser = async (
   const user = await User.findOne({ username });
 
   if (!user) {
-    next(new CustomError("Username not found", 401, "Wrong credentials"));
+    next(new CustomError("Username not found", 401, "El usuario no existe"));
     return;
   }
 
   if (!(await bcrypt.compare(password, user.password))) {
-    next(new CustomError("Password is incorrect", 401, "Wrong credentials"));
+    next(
+      new CustomError(
+        "Password is incorrect",
+        401,
+        "El usuario o la contraseña son incorrectos"
+      )
+    );
     return;
   }
 
