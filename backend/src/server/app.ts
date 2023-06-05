@@ -2,7 +2,7 @@ import "./loadEnviroment.js";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { loginUser } from "./usersControllers/usersControllers.js";
+import { loginUser } from "./controllers/usersControllers.js";
 import { generalError, unknownEndpoint } from "./middlewares/errors.js";
 
 const app = express();

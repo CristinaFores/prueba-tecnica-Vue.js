@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
-import environment from "../loadEnviroment";
-import CustomError from "../../CustomError/CustomError";
-import { Credentials } from "../../types/types";
-import User from "../../dataBase/models/User";
+import environment from "../loadEnviroment.js";
+import CustomError from "../../CustomError/CustomError.js";
+import { Credentials } from "../../types/types.js";
+import User from "../../dataBase/models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -12,7 +12,6 @@ export const loginUser = async (
   next: NextFunction
 ) => {
   const { username, password } = req.body as Credentials;
-
   const user = await User.findOne({ username });
 
   if (!user) {
