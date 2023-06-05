@@ -1,0 +1,45 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": ["xo", "prettier"],
+  "overrides": [
+    {
+      "extends": [
+        "xo-typescript",
+        "prettier",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "files": ["src/**/.ts", "src/**/.tsx"],
+      "rules": {
+        "no-implicit-coercion": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/prefer-nullish-coalescing": "off",
+        "@typescript-eslint/consistent-type-definitions": [
+          "error",
+          "interface"
+        ],
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/no-empty-function": "off"
+      }
+    },
+    {
+      "files": ["./src/**/models/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/naming-convention": "off"
+      }
+    }
+  ],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "off",
+    "no-implicit-coercion": "off"
+  }
+}
