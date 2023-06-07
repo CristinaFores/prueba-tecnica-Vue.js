@@ -3,25 +3,32 @@
     class="container mx-auto max-w-xs p-4 bg-white rounded-lg drop-shadow m-8"
   >
     <form @submit="handleSubmit">
-      <h1 class="text-center mb-6">Inicio de sesión</h1>
+      <div
+        v-if="errorMessage"
+        class="text-red-500 text-center mb-4 text-sm font-semibold border border-red-600 rounded-md p-2 bg-red-50 w-full"
+      >
+        * {{ errorMessage }}
+      </div>
+      <h1 class="text-center mb-4 font-bold text-lg">Inicio de sesión</h1>
+
       <div class="mb-4">
         <label for="username" class="font-bold">Nombre</label>
         <input
+          autocomplete="off"
           type="text"
           id="username"
           v-model="username"
           class="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
-          required
         />
       </div>
       <div class="mb-4">
         <label for="password" class="font-bold">Contraseña</label>
         <input
+          autocomplete="off"
           type="password"
           id="password"
           v-model="password"
           class="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
-          required
         />
       </div>
       <button
@@ -30,10 +37,10 @@
       >
         Enviar
       </button>
-      <div class="mt-4">
+      <div class="mt-4 text-center">
         <a href="#" class="text-blue-800">¿Olvidaste tu contraseña?</a>
       </div>
-      <div class="mt-6">
+      <div class="mt-6 text-center">
         <span class="text-gray-600">¿No tienes una cuenta? </span>
         <a href="#" class="text-blue-800">Regístrate</a>
       </div>
@@ -51,9 +58,11 @@ export default defineComponent({
     const router: Router = useRouter();
     const username = ref("");
     const password = ref("");
+    const errorMessage = ref("");
 
     const handleSubmit = async (event: Event) => {
       event.preventDefault();
+      errorMessage.value = "";
 
       try {
         const response = await fetch("http://localhost:4000/login", {
@@ -67,26 +76,27 @@ export default defineComponent({
           }),
         });
 
-        const { token } = await response.json();
+        const data = await response.json();
 
-        const jwtPayload: any = jwtDecode(token);
+        if (!response.ok) {
+          errorMessage.value = data.error;
+          return;
+        }
+
+        const jwtPayload: any = jwtDecode(data.token);
 
         const user = {
           id: jwtPayload.id,
           username: jwtPayload.username,
-          token: token,
+          token: data.token,
         };
 
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(user));
 
-        if (response.ok) {
-          router.push("/home");
-        } else {
-          router.push("/");
-        }
+        router.push("/home");
       } catch (error) {
-        console.error("Ocurrió un error al enviar la solicitud:", error);
+        console.log("Ocurrió un error al enviar la solicitud:", error);
       }
     };
 
@@ -94,6 +104,7 @@ export default defineComponent({
       username,
       password,
       handleSubmit,
+      errorMessage,
     };
   },
 });

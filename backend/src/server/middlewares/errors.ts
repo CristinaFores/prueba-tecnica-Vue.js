@@ -20,7 +20,7 @@ export const generalError = (
   next: NextFunction
 ) => {
   if (error instanceof ValidationError) {
-    return res.status(400).json(error);
+    return res.status(400).json({ error: error.details.body[0].message });
   }
 
   const statusCode = error.statusCode ?? 500;
