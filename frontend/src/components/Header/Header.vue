@@ -36,6 +36,7 @@
         </button>
       </div>
       <div
+        v-if="isAuthenticated"
         :class="{ hidden: !open, block: open }"
         class="w-full block flex-grow lg:flex lg:items-center lg:w-auto"
       >
