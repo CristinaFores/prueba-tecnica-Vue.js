@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import "../loadEnviroment.js";
+import "../server/loadEnviroment.js";
 
 export const connectDb = async (mongoUrl: string) => {
   await mongoose.connect(mongoUrl);
