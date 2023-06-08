@@ -48,7 +48,7 @@ Este proyecto está dividido en dos partes, una para el frontend y otra para el 
 4. Ejecuta el servidor
 
    ```
-   npm start
+   npm run start
    ```
 
 <br/>
